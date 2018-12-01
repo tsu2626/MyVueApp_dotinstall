@@ -4,9 +4,9 @@
     <ul>
       <li v-for="todo in todos" :key="todo">{{ todo }}</li>
     </ul>
-    <form action="">
-      <input type="text">
-      <input type="button" value="Add">
+    <form @submit.prevent="addItem">
+      <input type="text" v-model="newItem">
+      <input type="submit" value="Add">
     </form>
   </div>
 </template>
@@ -14,6 +14,7 @@
 <script>
 export default {
   name: 'ToDo',
+  newItem: "",
   data () {
     return {
       todos: [
@@ -21,6 +22,12 @@ export default {
         'task2',
         'task3'
       ]
+    }
+  },
+  methods: {
+    addItem: function() {
+      this.todos.push(this.newItem);
+      this.newItem = ""
     }
   }
 }
