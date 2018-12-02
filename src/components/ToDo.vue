@@ -3,7 +3,7 @@
     <h1 class=title>My Todos</h1>
     <ul>
       <li v-for="(todo, index) in todos" :key="todo">
-        {{ todo }}
+        {{ todo.title }}
         <span @click="deleteItem(index)" class="delete">[削除]</span>
       </li>
     </ul>
@@ -21,15 +21,28 @@
     data () {
       return {
         todos: [
-          'task1',
-          'task2',
-          'task3'
+          {
+            title: 'task1',
+            isDone: false
+          },
+          {
+            title: 'task2',
+            isDone: false
+          },
+          {
+            title: 'task3',
+            isDone: false
+          }
         ]
       }
     },
     methods: {
       addItem: function() {
-        this.todos.push(this.newItem);
+        var item = {
+          title: this.newItem,
+          isDone: false
+        };
+        this.todos.push(item);
         this.newItem = ""
       },
       deleteItem: function(index) {
