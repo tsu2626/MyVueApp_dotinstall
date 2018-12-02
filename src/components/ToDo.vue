@@ -3,6 +3,9 @@
     <h1 class=title>My Todos</h1>
     <ul>
       <li v-for="(todo, index) in todos" :key="todo">
+        <label class="checkbox">
+          <input type="checkbox" v-model="todo.isDone">
+        </label>
         {{ todo.title }}
         <span @click="deleteItem(index)" class="delete">[削除]</span>
       </li>
@@ -27,11 +30,11 @@
           },
           {
             title: 'task2',
-            isDone: false
+            isDone: true
           },
           {
             title: 'task3',
-            isDone: false
+            isDone: true
           }
         ]
       }
