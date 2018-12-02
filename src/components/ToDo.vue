@@ -6,7 +6,7 @@
         <label class="checkbox">
           <input type="checkbox" v-model="todo.isDone">
         </label>
-        {{ todo.title }}
+        <span :class="{done: todo.isDone}">{{ todo.title }}</span>
         <span @click="deleteItem(index)" class="delete">[削除]</span>
       </li>
     </ul>
@@ -72,5 +72,9 @@ li {
 }
 a {
   color: #42b983;
+}
+.hello li > span.done{
+  text-decoration: line-through;
+  color: dimgrey;
 }
 </style>
