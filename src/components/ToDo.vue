@@ -13,9 +13,13 @@
     <ul v-else class="subtitle">
       <li>Nothing Todos</li>
     </ul>
-    <form @submit.prevent="addItem">
-      <input type="text" v-model="newItem">
-      <input type="submit" value="Add">
+    <form class="field is-grouped" @submit.prevent="addItem">
+      <div class="control is-expanded">
+        <input class="input" type="text" v-model="newItem">
+      </div>
+      <div class="control">
+        <input class="button is-info" type="submit" value="Add">
+      </div>
     </form>
   </div>
 </template>
@@ -82,5 +86,9 @@ a {
 }
 .subtitle li {
   padding: 1%;
+}
+.field {
+  max-width: 300px;
+  margin: auto;
 }
 </style>
