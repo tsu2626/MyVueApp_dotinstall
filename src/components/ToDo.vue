@@ -9,6 +9,7 @@
         <span :class="{done: todo.isDone}">{{ todo.title }}</span>
         <span @click="deleteItem(index)" class="delete">[削除]</span>
       </li>
+      <h2 class="subtitle" v-show="!todos.length">Nothing Todos</h2>
     </ul>
     <form @submit.prevent="addItem">
       <input type="text" v-model="newItem">
@@ -76,5 +77,8 @@ a {
 .hello li > span.done{
   text-decoration: line-through;
   color: dimgrey;
+}
+ul h2 {
+  padding: 1%;
 }
 </style>
