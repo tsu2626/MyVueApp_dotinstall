@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1 class=title>My Todos</h1>
-    <ul class="todos" v-if="todos.length">
+    <ul class="todos is-size-5" v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo">
         <label class="checkbox">
           <input type="checkbox" v-model="todo.isDone">
@@ -10,7 +10,7 @@
         <span @click="deleteItem(index)" class="delete">[削除]</span>
       </li>
     </ul>
-    <ul v-else class="subtitle">
+    <ul v-else class="subtitle is-size-4">
       <li>Nothing Todos</li>
     </ul>
     <form class="field is-grouped" @submit.prevent="addItem">
@@ -85,7 +85,12 @@ a {
   color: dimgrey;
 }
 .todos {
-  padding: 1%;
+  padding-top: 2%;
+  padding-bottom: 2% 
+}
+.subtitle {
+  padding-top: 3%;
+  padding-bottom: 1% 
 }
 .field {
   max-width: 300px;
