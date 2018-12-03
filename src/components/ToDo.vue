@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1 class=title>My Todos</h1>
-    <ul>
+    <ul v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo">
         <label class="checkbox">
           <input type="checkbox" v-model="todo.isDone">
@@ -9,7 +9,9 @@
         <span :class="{done: todo.isDone}">{{ todo.title }}</span>
         <span @click="deleteItem(index)" class="delete">[削除]</span>
       </li>
-      <h2 class="subtitle" v-show="!todos.length">Nothing Todos</h2>
+    </ul>
+    <ul v-else class="subtitle">
+      <li>Nothing Todos</li>
     </ul>
     <form @submit.prevent="addItem">
       <input type="text" v-model="newItem">
@@ -78,7 +80,7 @@ a {
   text-decoration: line-through;
   color: dimgrey;
 }
-ul h2 {
+.subtitle li {
   padding: 1%;
 }
 </style>
