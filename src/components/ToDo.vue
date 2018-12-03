@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1 class=title>My Todos</h1>
-    <ul v-if="todos.length">
+    <ul class="todos" v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo">
         <label class="checkbox">
           <input type="checkbox" v-model="todo.isDone">
@@ -15,10 +15,10 @@
     </ul>
     <form class="field is-grouped" @submit.prevent="addItem">
       <div class="control is-expanded">
-        <input class="input" type="text" v-model="newItem">
+        <input class="input is-rounded" type="text" v-model="newItem">
       </div>
       <div class="control">
-        <input class="button is-info" type="submit" value="Add">
+        <input class="button is-info is-rounded" type="submit" value="Add">
       </div>
     </form>
   </div>
@@ -84,7 +84,7 @@ a {
   text-decoration: line-through;
   color: dimgrey;
 }
-.subtitle li {
+.todos {
   padding: 1%;
 }
 .field {
