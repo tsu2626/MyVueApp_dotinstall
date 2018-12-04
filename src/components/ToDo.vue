@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
-    <h1 class=title>My Todos</h1>
+    <h1 class=title>
+      My Todos
+      <span class="is-size-4 has-text-grey">({{ remaining }}/{{ todos.length }})</span>
+    </h1>
     <ul class="todos is-size-5" v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo">
         <label class="checkbox">
@@ -60,6 +63,14 @@
           this.todos.splice(index, 1);
         }
       }
+    },
+    computed: {
+      remaining: function() {
+        var items = this.todos.filter(function(todo) { //dataのtodosを参照し、
+          return !todo.isDone; //完了していないtodoを返す
+        });
+        return items.length; //itemの数
+       }
     }
   }
 </script>
