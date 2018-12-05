@@ -34,30 +34,19 @@
     newItem: "",
     data () {
       return {
-        todos: [
-          {
-            title: 'task1',
-            isDone: false
-          },
-          {
-            title: 'task2',
-            isDone: true
-          },
-          {
-            title: 'task3',
-            isDone: true
-          }
-        ]
+        todos: []
       }
     },
     watch: {
       todos: {
         handler: function() {
-          localStorage.setItem('todos', JSON.stringify(this.todos));
-          alert('Data Saved!');
+          localStorage.setItem('todos', JSON.stringify(this.todos)); //isDoneとtodosどちらもJSON形式でlocalStrageに保存
         },
         deep: true
       }
+    },
+    mounted: function() {
+      this.todos = JSON.parse(localStorage.getItem('todos')) || []; //localStrageから呼び出し
     },
     methods: {
       addItem: function() {
