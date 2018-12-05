@@ -68,20 +68,13 @@
         if(!confirm('delete finished?')){
           return; //Noを選んだら何もせす返す
         }
-        // this.todos = this.todos.filter(function(todo) { //yesを選んだら
-        //   return !todo.isDone; //未チェックのTodoを返す
-        // });
         this.todos = this.remaining;
       }
     },
     computed: {
       remaining: function() {
-      //   var items = this.todos.filter(function(todo) { //dataのtodosを参照し、
-      //     return !todo.isDone; //未チェックのTodoを返す
-      //   });
-      //     return items.length; //itemの数　
-          return this.todos.filter(function(todo) { //dataのtodosを参照し、
-            return !todo.isDone; //未チェックのTodoを返す
+        return this.todos.filter(function(todo) { //dataのtodosを参照し、
+          return !todo.isDone; //未チェックのTodoを返す
         })
       }
     }
