@@ -69,7 +69,7 @@
         var items = this.todos.filter(function(todo) { //dataのtodosを参照し、
           return !todo.isDone; //完了していないtodoを返す
         });
-        return items.length; //itemの数
+        return items.length; //itemの数　
        }
     }
   }
