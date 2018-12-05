@@ -3,6 +3,7 @@
     <h1 class=title>
       My Todos
       <span class="is-size-4 has-text-grey">({{ remaining }}/{{ todos.length }})</span>
+      <a class="button is-danger small is-rounded" @click="purge">Purge</a>
     </h1>
     <ul class="todos is-size-5" v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo">
@@ -62,14 +63,22 @@
         if(confirm('Are You Sure?')){
           this.todos.splice(index, 1);
         }
+      },
+      purge: function() {
+        if(!confirm('delete finished?')){
+          return; //Noを選んだら何もせす返す
+        }
+        this.todos = this.todos.filter(function(todo) { //yesを選んだら
+          return !todo.isDone; //未チェックのTodoを返す
+        });
       }
     },
     computed: {
       remaining: function() {
         var items = this.todos.filter(function(todo) { //dataのtodosを参照し、
-          return !todo.isDone; //完了していないtodoを返す
+          return !todo.isDone; //未チェックのTodoを返す
         });
-        return items.length; //itemの数　
+          return items.length; //itemの数　
        }
     }
   }
@@ -97,11 +106,11 @@ a {
 }
 .todos {
   padding-top: 2%;
-  padding-bottom: 2% 
+  padding-bottom: 2%;
 }
 .subtitle {
   padding-top: 3%;
-  padding-bottom: 1% 
+  padding-bottom: 1%;
 }
 .field {
   max-width: 300px;
