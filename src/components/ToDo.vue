@@ -2,7 +2,7 @@
   <div class="hello">
     <h1 class=title>
       My Todos
-      <span class="is-size-4 has-text-grey">({{ remaining }}/{{ todos.length }})</span>
+      <span class="is-size-4 has-text-grey">({{ remaining.length }}/{{ todos.length }})</span>
       <a class="button is-danger small is-rounded" @click="purge">Purge</a>
     </h1>
     <ul class="todos is-size-5" v-if="todos.length">
@@ -68,18 +68,22 @@
         if(!confirm('delete finished?')){
           return; //Noを選んだら何もせす返す
         }
-        this.todos = this.todos.filter(function(todo) { //yesを選んだら
-          return !todo.isDone; //未チェックのTodoを返す
-        });
+        // this.todos = this.todos.filter(function(todo) { //yesを選んだら
+        //   return !todo.isDone; //未チェックのTodoを返す
+        // });
+        this.todos = this.remaining;
       }
     },
     computed: {
       remaining: function() {
-        var items = this.todos.filter(function(todo) { //dataのtodosを参照し、
-          return !todo.isDone; //未チェックのTodoを返す
-        });
-          return items.length; //itemの数　
-       }
+      //   var items = this.todos.filter(function(todo) { //dataのtodosを参照し、
+      //     return !todo.isDone; //未チェックのTodoを返す
+      //   });
+      //     return items.length; //itemの数　
+          return this.todos.filter(function(todo) { //dataのtodosを参照し、
+            return !todo.isDone; //未チェックのTodoを返す
+        })
+      }
     }
   }
 </script>
