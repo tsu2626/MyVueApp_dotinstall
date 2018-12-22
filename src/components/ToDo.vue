@@ -1,10 +1,7 @@
 <template>
   <div class="hello">
-    <h1 class=title>
-      My Todos
       <span class="is-size-4 has-text-grey">({{ remaining.length }}/{{ todos.length }})</span>
       <a class="button is-danger small is-rounded" @click="purge">Purge</a>
-    </h1>
     <ul class="todos is-size-5" v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo">
         <label class="checkbox">
@@ -23,6 +20,7 @@
       </div>
       <div class="control">
         <input class="button is-info is-rounded" type="submit" value="Add">
+        <span @click="saveItems" class="button is-success is-rounded">Save</span>
       </div>
     </form>
   </div>
@@ -36,6 +34,17 @@
       return {
         todos: []
       }
+    },
+    created: function () {
+      firebase
+        .datebase()
+        .ref('memos/' + this.user.uid)
+        .onse('value')
+        .then(result => {
+          if (result.val()) {
+            this.todos = result.val();
+          }
+        })
     },
     watch: {
       todos: {
@@ -67,6 +76,12 @@
           return; //Noを選んだら何もせす返す
         }
         this.todos = this.remaining;
+      },
+      saveItems: function () {
+        firebase
+          .database()
+          .ref('todos/' + this.user.uid)
+          .set(this.todos);
       }
     },
     computed: {
