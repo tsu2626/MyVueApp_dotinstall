@@ -1,7 +1,10 @@
 <template>
   <div class="hello">
+    <h1 class=title>
+      My Todos
       <span class="is-size-4 has-text-grey">({{ remaining.length }}/{{ todos.length }})</span>
       <a class="button is-danger small is-rounded" @click="purge">Purge</a>
+    </h1>
     <ul class="todos is-size-5" v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo">
         <label class="checkbox">

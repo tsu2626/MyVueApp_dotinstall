@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Home v-if="!isLogin"></Home>
-    <Editor v-if="isLogin"></Editor>
+    <ToDo v-if="isLogin"></Todo>
   </div>
 </template>
 
@@ -11,9 +11,14 @@ import Home from './components/Home'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      isLogin: false
+    };
+  },
   components: {
-    ToDo,
-    Home
+    ToDo: ToDo,
+    Home: Home
   }
 }
 </script>
