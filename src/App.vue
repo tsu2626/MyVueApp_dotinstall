@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Home/>
-    <ToDo/>
+    <Home v-if="!isLogin"></Home>
+    <Editor v-if="isLogin"></Editor>
   </div>
 </template>
 
