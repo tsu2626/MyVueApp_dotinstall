@@ -8,9 +8,37 @@
       　Sign In or Sign Up
     </span>
   </div>
-</template>
+</template>''
 <script>
+import firebase from 'firebase'
+
+var config = {
+        apiKey: "AIzaSyCqXQSo7dhIy7DLTM77AO36TkfeIP7HcM0",
+        authDomain: "todoapp-b6529.firebaseapp.com",
+        databaseURL: "https://todoapp-b6529.firebaseio.com",
+        projectId: "todoapp-b6529",
+        storageBucket: "todoapp-b6529.appspot.com",
+        messagingSenderId: "362391702616"
+      };
+      firebase.initializeApp(config);
 export default {
+  name:'home',
+  data () {
+    return {
+
+    }
+  },
+  methods: {
+    googSignin() {
+      const provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithPopup(provider)
+        .catch(error => alert(error.message))
+        .then(data => {
+          alert('login success')
+          console.log(data)
+        })
+    }
+  }
 
 }
 </script>
