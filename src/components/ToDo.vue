@@ -35,40 +35,29 @@
   export default {
     name: 'ToDo',
     newItem: "",
+    props: ["user"],
     data () {
       return {
-        todos: []
+        todos: [],
       }
     },
     created: function () {
       firebase
-        .datebase()
-        .ref('memos/' + this.user.uid)
-        .onse('value')
+        .database()
+        .ref('todos/' + this.user.uid)
+        .once('value')
         .then(result => {
           if (result.val()) {
             this.todos = result.val();
           }
         })
     },
-    watch: {
-      todos: {
-        handler: function() {
-          localStorage.setItem('todos', JSON.stringify(this.todos)); //isDoneとtodosどちらもJSON形式でlocalStrageに保存
-        },
-        deep: true
-      }
-    },
-    mounted: function() {
-      this.todos = JSON.parse(localStorage.getItem('todos')) || []; //localStrageから呼び出し
-    },
     methods: {
       addItem: function() {
-        var item = {
+        this.todos.push({
           title: this.newItem,
           isDone: false
-        };
-        this.todos.push(item);
+        })
         this.newItem = ""
       },
       deleteItem: function(index) {
@@ -83,12 +72,14 @@
         this.todos = this.remaining;
       },
       saveItems: function () {
+        alert('Save Success')
         firebase
           .database()
           .ref('todos/' + this.user.uid)
           .set(this.todos);
       },
       signOut: function () {
+        console.log('')
         firebase.auth().signOut();
       }
     },
