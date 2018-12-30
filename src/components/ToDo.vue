@@ -1,24 +1,13 @@
 <template>
   <div class="hello">
+    <nav>
+      <span class="button is-danger small is-rounded" @click="purge">Purge</span>
+      <span class="button is-link small is-rounded" @click="signOut">SignOut</span>
+    </nav>
     <h1 class=title>
       My Todos
       <span class="is-size-4 has-text-grey">({{ remaining.length }}/{{ todos.length }})</span>
-      <span class="button is-danger small is-rounded" @click="purge">Purge</span>
-      <span class="button is-link small is-rounded" @click="signOut">SignOut</span>
     </h1>
-
-    <ul class="todos is-size-5" v-if="todos.length">
-      <li v-for="(todo, index) in todos" :key="todo">
-        <label class="checkbox">
-          <input type="checkbox" v-model="todo.isDone">
-        </label>
-        <span :class="{done: todo.isDone}">{{ todo.title }}</span>
-        <span @click="deleteItem(index)" class="delete">[削除]</span>
-      </li>
-    </ul>
-    <ul v-else class="subtitle is-size-4">
-      <li>Nothing Todos</li>
-    </ul>
     <form class="field is-grouped" @submit.prevent="addItem">
       <div class="control is-expanded">
         <input class="input is-rounded" type="text" v-model="newItem">
@@ -28,6 +17,33 @@
         <span @click="saveItems" class="button is-success is-rounded">Save</span>
       </div>
     </form>
+    <ul class="todos is-size-5" v-if="todos.length">
+      <li v-for="(todo, index) in todos" :key="todo">
+        <label class="checkbox">
+          <input type="checkbox" v-model="todo.isDone">
+        </label>
+        <div class="card">
+          <head class="card-header">
+            <p class="card-header-title">
+              <span :class="{done: todo.isDone}">{{ todo.title }}</span>
+            </p>
+          </head>
+          <div class="card-content">
+            <div class="content">
+              投稿できるようにする
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item">Edit</a>
+            <a href="#" class="card-footer-item">Delete</a>
+          </footer>
+        </div>
+        <span @click="deleteItem(index)" class="delete">[削除]</span>
+      </li>
+    </ul>
+    <ul v-else class="subtitle is-size-4">
+      <li>Nothing Todos</li>
+    </ul>
   </div>
 </template>
 
@@ -95,6 +111,9 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+nav {
+  padding-bottom: 2%;
+}
 h1, h2 {
   font-weight: normal;
 }
