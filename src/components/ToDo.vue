@@ -10,7 +10,8 @@
     </h1>
     <form class="field is-grouped" @submit.prevent="addItem">
       <div class="control is-expanded">
-        <input class="input is-rounded" type="text" v-model="newItem">
+        <input class="input is-rounded" type="text" v-model="newItem" placeholder="Title">
+        <textarea class="input is-rounded" type="text" v-model="newContent" style="white-space: pre;" placeholder="Todo"></textarea>
       </div>
       <div class="control">
         <input class="button is-info is-rounded" type="submit" value="Add">
@@ -30,15 +31,15 @@
           </head>
           <div class="card-content">
             <div class="content">
-              投稿できるようにする
+              <span :class="{done: todo.isDone}" style="white-space: pre;">{{ todo.content }}</span>
             </div>
           </div>
           <footer class="card-footer">
-            <a href="#" class="card-footer-item">Edit</a>
-            <a href="#" class="card-footer-item">Delete</a>
+            <span class="card-footer-item button">Edit</span>
+            <span @click="deleteItem(index)" class="card-footer-item button is-danger">Delete</span>
           </footer>
         </div>
-        <span @click="deleteItem(index)" class="delete">[削除]</span>
+        <!-- <span @click="deleteItem(index)" class="delete">[削除]</span> -->
       </li>
     </ul>
     <ul v-else class="subtitle is-size-4">
@@ -55,6 +56,7 @@
     data () {
       return {
         todos: [],
+        components: [],
       }
     },
     created: function () {
@@ -65,6 +67,7 @@
         .then(result => {
           if (result.val()) {
             this.todos = result.val();
+            this.components = result.val();
           }
         })
     },
@@ -72,6 +75,7 @@
       addItem: function() {
         this.todos.push({
           title: this.newItem,
+          content: this.newContent,
           isDone: false
         })
         this.newItem = ""
