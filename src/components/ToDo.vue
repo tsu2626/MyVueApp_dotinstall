@@ -8,16 +8,22 @@
       My Todos
       <span class="is-size-4 has-text-grey">({{ remaining.length }}/{{ todos.length }})</span>
     </h1>
-    <form class="field is-grouped" @submit.prevent="addItem">
-      <div class="control is-expanded">
-        <input class="input is-rounded" type="text" v-model="newItem" placeholder="Title">
-        <textarea class="input is-rounded" type="text" v-model="newContent" style="white-space: pre;" placeholder="Todo"></textarea>
-      </div>
-      <div class="control">
-        <input class="button is-info is-rounded" type="submit" value="Add">
-        <span @click="saveItems" class="button is-success is-rounded">Save</span>
-      </div>
-    </form>
+      <button class="button is-success small is-rounded" @click="active">Add ToDo</button>
+    <div v-if="isActive">
+      <!-- <button class="button is-link small is-rounded" @click="active">Add ToDo</button> -->
+    </div>
+    <div v-else>
+      <form class="field is-grouped" @submit.prevent="close">
+        <div class="control is-expanded">
+          <input class="input is-rounded" type="text" v-model="newItem" placeholder="Title">
+          <textarea class="textarea" type="text" v-model="newContent" style="white-space: pre;" placeholder="Todo"></textarea>
+        </div>
+        <div class="control">
+          <input class="button is-info is-rounded" type="submit" value="Close">
+          <!-- <span @click="saveItems" class="button is-success is-rounded">Save</span> -->
+        </div>
+      </form>
+    </div>
     <ul class="todos is-size-5" v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo">
         <label class="checkbox">
@@ -57,6 +63,7 @@
       return {
         todos: [],
         components: [],
+        isActive: true
       }
     },
     created: function () {
@@ -72,13 +79,23 @@
         })
     },
     methods: {
-      addItem: function() {
+      active: function() {
+        this.isActive = !this.isActive
+      },
+      close: function() {
         this.todos.push({
           title: this.newItem,
           content: this.newContent,
-          isDone: false
-        })
+          isDone: false,
+        }),
+        // alert('Save Success')
+        firebase
+          .database()
+          .ref('todos/' + this.user.uid)
+          .set(this.todos);
+
         this.newItem = ""
+        this.newContent = ""
       },
       deleteItem: function(index) {
         if(confirm('Are You Sure?')){
@@ -92,11 +109,6 @@
         this.todos = this.remaining;
       },
       saveItems: function () {
-        alert('Save Success')
-        firebase
-          .database()
-          .ref('todos/' + this.user.uid)
-          .set(this.todos);
       },
       signOut: function () {
         console.log('')
@@ -143,6 +155,9 @@ a {
 .subtitle {
   padding-top: 3%;
   padding-bottom: 1%;
+}
+.control {
+  /* padding-top: 12%; */
 }
 .field {
   max-width: 300px;
