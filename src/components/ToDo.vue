@@ -21,8 +21,9 @@
         </div>
       </section>
       
-      <div class="modal" :class="{'is-active':isActive}">
+      <div class="modal" :class="{'is-active':opened}">
         <div class="modal-background"></div>
+          <div class="delete is-large" @click="close"></div>
           <div class="modal-content">
             <div class="box">
               <div class="content has-text-centered">
@@ -75,6 +76,7 @@
 </template>
 
 <script>
+  import ClickOutside from 'vue-click-outside'
   export default {
     name: 'ToDo',
     newItem: "",
@@ -83,7 +85,7 @@
       return {
         todos: [],
         components: [],
-        isActive: true
+        opened: false
       }
     },
     created: function () {
@@ -100,7 +102,11 @@
     },
     methods: {
       active: function() {
-        this.isActive = !this.isActive
+        this.opened = !this.opened
+        firebase
+          .database()
+          .ref('todos/' + this.user.uid)
+          .set(this.todos);
       },
       Add: function() {
         this.todos.push({
@@ -108,7 +114,6 @@
           content: this.newContent,
           isDone: false,
         }),
-        // alert('Save Success')
         firebase
           .database()
           .ref('todos/' + this.user.uid)
@@ -116,25 +121,42 @@
 
         this.newItem = ""
         this.newContent = ""
-        this.isActive = !this.isActive
+        this.opened = !this.opened
+      },
+      close: function () {
+        this.newItem = ""
+        this.newContent = ""
+        this.opened = !this.opened
       },
       deleteItem: function(index) {
         if(confirm('Are You Sure?')){
           this.todos.splice(index, 1);
         }
+        firebase
+          .database()
+          .ref('todos/' + this.user.uid)
+          .set(this.todos);
       },
       purge: function() {
         if(!confirm('delete finished?')){
           return; //Noを選んだら何もせす返す
         }
         this.todos = this.remaining;
-      },
-      saveItems: function () {
+        firebase
+          .database()
+          .ref('todos/' + this.user.uid)
+          .set(this.todos);        
       },
       signOut: function () {
         console.log('')
         firebase.auth().signOut();
       }
+    },
+    mounted () {
+      this.popupItem = this.$el
+    },
+    directives: {
+      ClickOutside
     },
     computed: {
       remaining: function() {
