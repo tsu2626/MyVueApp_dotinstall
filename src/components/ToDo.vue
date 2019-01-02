@@ -4,26 +4,46 @@
       <span class="button is-danger small is-rounded" @click="purge">Purge</span>
       <span class="button is-link small is-rounded" @click="signOut">SignOut</span>
     </nav>
+
     <h1 class=title>
       My Todos
       <span class="is-size-4 has-text-grey">({{ remaining.length }}/{{ todos.length }})</span>
     </h1>
-      <button class="button is-success small is-rounded" @click="active">Add ToDo</button>
-    <div v-if="isActive">
-      <!-- <button class="button is-link small is-rounded" @click="active">Add ToDo</button> -->
-    </div>
-    <div v-else>
-      <form class="field is-grouped" @submit.prevent="close">
-        <div class="control is-expanded">
-          <input class="input is-rounded" type="text" v-model="newItem" placeholder="Title">
-          <textarea class="textarea" type="text" v-model="newContent" style="white-space: pre;" placeholder="Todo"></textarea>
+
+    <article id="launch-modal">
+      <section class="section">
+        <div class="container">
+          <div class="content has-text-centered">
+            <p class="control">
+              <button @click="active" class="button is-info is-rounded">Add ToDo</button>
+            </p>
+          </div>
         </div>
-        <div class="control">
-          <input class="button is-info is-rounded" type="submit" value="Close">
-          <!-- <span @click="saveItems" class="button is-success is-rounded">Save</span> -->
-        </div>
-      </form>
-    </div>
+      </section>
+      
+      <div class="modal" :class="{'is-active':isActive}">
+        <div class="modal-background"></div>
+          <div class="modal-content">
+            <div class="box">
+              <div class="content has-text-centered">
+                <div class="control">
+                  <form class="field is-grouped" @submit.prevent="Add">
+                    <div class="control is-expanded">
+                      <input class="input is-rounded" type="text" v-model="newItem" placeholder="Title">
+                      <textarea class="textarea" type="text" v-model="newContent" style="white-space: pre;" placeholder="Todo"></textarea>
+                    </div>
+                    <div class="control">
+                      <input class="button is-info is-rounded" type="submit" value="Add">
+                    </div>
+                  </form>
+                </div>
+                <span>&nbsp;</span>
+              </div>
+            </div>
+          </div>
+      </div>
+    </article>
+
     <ul class="todos is-size-5" v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo">
         <label class="checkbox">
@@ -45,9 +65,9 @@
             <span @click="deleteItem(index)" class="card-footer-item button is-danger">Delete</span>
           </footer>
         </div>
-        <!-- <span @click="deleteItem(index)" class="delete">[削除]</span> -->
       </li>
     </ul>
+
     <ul v-else class="subtitle is-size-4">
       <li>Nothing Todos</li>
     </ul>
@@ -82,7 +102,7 @@
       active: function() {
         this.isActive = !this.isActive
       },
-      close: function() {
+      Add: function() {
         this.todos.push({
           title: this.newItem,
           content: this.newContent,
@@ -96,6 +116,7 @@
 
         this.newItem = ""
         this.newContent = ""
+        this.isActive = !this.isActive
       },
       deleteItem: function(index) {
         if(confirm('Are You Sure?')){
