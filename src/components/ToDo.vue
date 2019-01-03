@@ -23,7 +23,7 @@
       
       <div class="modal" :class="{'is-active':opened}">
         <div class="modal-background"></div>
-          <div class="delete is-large" @click="close"></div>
+          <div class="delete is-large close" @click="close"></div>
           <div class="modal-content">
             <div class="box">
               <div class="content has-text-centered">
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-  import ClickOutside from 'vue-click-outside'
+  // import ClickOutside from 'vue-click-outside'
   export default {
     name: 'ToDo',
     newItem: "",
@@ -152,12 +152,12 @@
         firebase.auth().signOut();
       }
     },
-    mounted () {
-      this.popupItem = this.$el
-    },
-    directives: {
-      ClickOutside
-    },
+    // mounted () {
+    //   this.popupItem = this.$el
+    // },
+    // directives: {
+    //   ClickOutside
+    // },
     computed: {
       remaining: function() {
         return this.todos.filter(function(todo) { //dataのtodosを参照し、
@@ -201,9 +201,15 @@ a {
 }
 .control {
   /* padding-top: 12%; */
+  text-align: center;
 }
 .field {
   max-width: 300px;
   margin: auto;
+}
+.close {
+  position:absolute;
+  top:28%;
+  right:5%; 
 }
 </style>
