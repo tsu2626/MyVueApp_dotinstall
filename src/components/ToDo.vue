@@ -32,8 +32,6 @@
                     <div class="control is-expanded">
                       <input class="input is-rounded" type="text" v-model="newItem" placeholder="Title">
                       <textarea class="textarea" type="text" v-model="newContent" style="white-space: pre;" placeholder="Todo"></textarea>
-                    </div>
-                    <div class="control">
                       <input class="button is-info is-rounded" type="submit" value="Add">
                     </div>
                   </form>
@@ -76,7 +74,7 @@
 </template>
 
 <script>
-  // import ClickOutside from 'vue-click-outside'
+  import ClickOutside from 'vue-click-outside'
   export default {
     name: 'ToDo',
     newItem: "",
@@ -152,12 +150,12 @@
         firebase.auth().signOut();
       }
     },
-    // mounted () {
-    //   this.popupItem = this.$el
-    // },
-    // directives: {
-    //   ClickOutside
-    // },
+    mounted () {
+      this.popupItem = this.$el
+    },
+    directives: {
+      ClickOutside
+    },
     computed: {
       remaining: function() {
         return this.todos.filter(function(todo) { //dataのtodosを参照し、
