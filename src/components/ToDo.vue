@@ -21,11 +21,10 @@
         </div>
       </section>
       
-      <div class="modal" :class="{'is-active':opened}">
-        <div class="modal-background"></div>
+      <div class="modal" :class="{'is-active':isActive}">
+        <div v-click-outside="close" @click="close" class="modal-background"></div>
           <div class="modal-content">
             <div class="box">
-              <div class="delete is-large close" @click="close"></div>
               <div class="content has-text-centered">
                 <div class="control">
                   <form class="field is-grouped" @submit.prevent="Add">
@@ -83,7 +82,7 @@
       return {
         todos: [],
         components: [],
-        opened: false
+        isActive: false
       }
     },
     created: function () {
@@ -100,7 +99,7 @@
     },
     methods: {
       active: function() {
-        this.opened = !this.opened
+        this.isActive = !this.isActive
         firebase
           .database()
           .ref('todos/' + this.user.uid)
@@ -119,12 +118,12 @@
 
         this.newItem = ""
         this.newContent = ""
-        this.opened = !this.opened
+        this.isActive = !this.isActive
       },
       close: function () {
         this.newItem = ""
         this.newContent = ""
-        this.opened = !this.opened
+        this.isActive = !this.isActive
       },
       deleteItem: function(index) {
         if(confirm('Are You Sure?')){
