@@ -23,9 +23,9 @@
       
       <div class="modal" :class="{'is-active':opened}">
         <div class="modal-background"></div>
-          <div class="delete is-large close" @click="close"></div>
           <div class="modal-content">
             <div class="box">
+              <div class="delete is-large close" @click="close"></div>
               <div class="content has-text-centered">
                 <div class="control">
                   <form class="field is-grouped" @submit.prevent="Add">
@@ -209,7 +209,7 @@ a {
 }
 .close {
   position:absolute;
-  top:28%;
-  right:5%; 
+  top:0%;
+  right:0%; 
 }
 </style>
