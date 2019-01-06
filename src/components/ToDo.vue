@@ -23,22 +23,22 @@
       
       <div class="modal" :class="{'is-active':isActive}">
         <div v-click-outside="close" @click="close" class="modal-background"></div>
-          <div class="modal-content">
-            <div class="box">
-              <div class="content has-text-centered">
-                <div class="control">
-                  <form class="field is-grouped" @submit.prevent="Add">
-                    <div class="control is-expanded">
-                      <input class="input is-rounded" type="text" v-model="newItem" placeholder="Title">
-                      <textarea class="textarea" type="text" v-model="newContent" style="white-space: pre;" placeholder="Todo"></textarea>
-                      <input class="button is-info is-rounded" type="submit" value="Add">
-                    </div>
-                  </form>
-                </div>
-                <span>&nbsp;</span>
+        <div class="modal-content">
+          <div class="box">
+            <div class="content has-text-centered">
+              <div class="control">
+                <form class="field is-grouped" @submit.prevent="Add">
+                  <div class="control is-expanded">
+                    <input class="input is-rounded" type="text" v-model="newItem" placeholder="Title">
+                    <textarea class="textarea" type="text" v-model="newContent" style="white-space: pre;" placeholder="Todo"></textarea>
+                    <input class="button is-info is-rounded" type="submit" value="Add">
+                  </div>
+                </form>
               </div>
+              <span>&nbsp;</span>
             </div>
           </div>
+        </div>
       </div>
     </article>
 
