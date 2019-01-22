@@ -149,6 +149,12 @@
         this.isActive = !this.isActive
       },
       Edit: function (){
+        // this.todos.splice(index, 1)({
+        //   title: this.newItem,
+        //   content: this.newContent,
+        //   isDone: false,
+        // });
+
         this.todos.push({
           title: this.newItem,
           content: this.newContent,
@@ -157,7 +163,7 @@
 
         this.newItem = ""
         this.newContent = ""
-        this.isActive = !this.isActive
+        this.isEditActive = !this.isEditActive
       },
       addClose: function () {
         this.newItem = ""
