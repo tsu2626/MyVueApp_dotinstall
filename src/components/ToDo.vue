@@ -50,8 +50,8 @@
               <div class="control">
                 <form class="field is-grouped" @submit.prevent="Edit">
                   <div class="control is-expanded">
-                    <input class="input is-rounded" type="text" v-model="newItem" placeholder="Title">
-                    <textarea class="textarea" type="text" v-model="newContent" style="white-space: pre;" placeholder="Todo"></textarea>
+                    <input class="input is-rounded" type="text" v-model="editedItem" placeholder="Title">
+                    <textarea class="textarea" type="text" v-model="editedContent" style="white-space: pre;" placeholder="Todo"></textarea>
                     <input class="button is-info is-rounded" type="submit" value="Edit">
                   </div>
                 </form>
@@ -148,22 +148,21 @@
         this.newContent = ""
         this.isActive = !this.isActive
       },
-      Edit: function (){
-        // this.todos.splice(index, 1)({
-        //   title: this.newItem,
-        //   content: this.newContent,
-        //   isDone: false,
-        // });
+      Edit: function (index){
+        this.todos.splice(index, 1,{
+          title: this.editedItem,
+          content: this.editedContent
+        });
 
-        this.todos.push({
-          title: this.newItem,
-          content: this.newContent,
-          isDone: false,
-        }),
+        firebase
+          .database()
+          .ref('todos/' + this.user.uid)
+          .set(this.todos);
 
-        this.newItem = ""
-        this.newContent = ""
+        this.editedItem = ""
+        this.editedContent = ""
         this.isEditActive = !this.isEditActive
+
       },
       addClose: function () {
         this.newItem = ""
